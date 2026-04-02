@@ -4,8 +4,8 @@ import db from '../config/db';
 import { JwtPayload, RefreshTokenPayload, UserRow } from '../types';
 
 // Ensure these are never undefined to avoid type errors
-const ACCESS_SECRET: Secret = process.env.JWT_SECRET || 'default_access_secret';
-const REFRESH_SECRET: Secret = process.env.JWT_REFRESH_SECRET || 'default_refresh_secret';
+const ACCESS_SECRET: Secret = process.env.JWT_SECRET || (() => { throw new Error('JWT_SECRET is missing'); })();
+const REFRESH_SECRET: Secret = process.env.JWT_REFRESH_SECRET || (() => { throw new Error('JWT_REFRESH_SECRET is missing'); })();
 
 // Use 'as any' or a specific type to prevent the TS2769 overload error
 const ACCESS_EXP = (process.env.JWT_EXPIRES_IN ?? '15m') as any;
